@@ -1,0 +1,12 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+<h2>{{ user.user_name }}</h2>
+
+<ul>
+  <li>{{ user.user_email }}</li>
+  <li>{{ user.updated|date("m/d/Y") }}</li>
+</ul>
+
+{% endblock %}

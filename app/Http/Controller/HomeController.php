@@ -2,7 +2,7 @@
 
 namespace Http\Controller;
 
-use Model\ArticleRepository;
+use Persistence\Repositories\ArticleRepository;
 use Twig_Environment;
 
 class HomeController

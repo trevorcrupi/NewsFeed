@@ -3,7 +3,7 @@
 namespace Provider;
 
 use function DI\object;
-use Model\MessageRepository;
+use Persistence\Repositories\MessageRepository;
 use Persistence\MessageMapper;
 
 class MessageControllerProvider extends Provider

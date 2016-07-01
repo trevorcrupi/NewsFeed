@@ -28,12 +28,13 @@
 
     <hr/>
 
-    <p>
-        To view the articles list in the CLI, run the following command:
-    </p>
+    <form action="/user" method="POST" style="width: 25%;">
+      <legend>Create a User</legend>
+      <input type="text" name="user_name" placeholder="Your User Name" />
+      <input type="text" name="user_email" placeholder="Your Email" />
+      <input type="password" name="user_password" placeholder="Your Password" />
+      <button type="submit" class="btn">Submit</button>
+    </form>
 
-    <div class="card-panel grey darken-3" style="color: white">
-        <pre><code>php console.php articles</code></pre>
-    </div>
 
 {% endblock %}

@@ -4,7 +4,7 @@ namespace Provider;
 
 use function DI\object;
 use function DI\get;
-use Model\ArticleRepository;
+use Persistence\Repositories\ArticleRepository;
 use Persistence\InMemoryArticleRepository;
 
 class ArticleControllerProvider extends Provider

@@ -2,7 +2,7 @@
 
 namespace Http\Controller;
 
-use Model\MessageRepository;
+use Persistence\Repositories\MessageRepository;
 use Twig_Environment;
 
 class MessageController

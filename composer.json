@@ -16,6 +16,6 @@
         "mnapoli/silly": "^1.1",
         "clue/graph": "*",
         "graphp/algorithms": "^0.8.1",
-         "doctrine/orm": "2.4.*"
+         "doctrine/orm": "*"
     }
 }

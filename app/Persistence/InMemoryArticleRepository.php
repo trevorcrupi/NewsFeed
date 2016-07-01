@@ -3,7 +3,7 @@
 namespace Persistence;
 
 use Model\Article;
-use Model\ArticleRepository;
+use Persistence\Repositories\ArticleRepository;
 
 class InMemoryArticleRepository implements ArticleRepository
 {

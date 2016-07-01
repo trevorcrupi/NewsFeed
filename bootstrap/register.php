@@ -1,8 +1,6 @@
 <?php
 
 use function DI\object;
-use Model\ArticleRepository;
-use Persistence\InMemoryArticleRepository;
 use Doctrine\ORM\EntityManager;
 
 global $entityManager;

@@ -3,7 +3,7 @@
 namespace Persistence;
 
 use Model\Message;
-use Model\MessageRepository;
+use Persistence\Repositories\MessageRepository;
 use Doctrine\ORM\EntityManager;
 
 class MessageMapper implements MessageRepository
