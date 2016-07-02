@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h1>Welcome to your inbox <b>@crupi_trevor</b>!</h1>
+    <h1>Welcome to your inbox <b>@{{ user.username }}</b>!</h1>
 
     <p>Have a look at your messages:</p>
 
@@ -28,7 +28,5 @@
       <input type="text" name="message_text" placeholder="Type Your Message Here..." />
       <button type="submit" class="btn">Submit</button>
     </form>
-
-    <p><a href="/" class="btn">Back to Home</a></p>
 
 {% endblock %}

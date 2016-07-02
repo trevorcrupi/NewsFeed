@@ -2,4 +2,7 @@
 
 $container = require __DIR__ . '/../bootstrap/bootstrap.php';
 
-$route = require __DIR__ . '/../app/Http/Routes.php';
+$kernel = new \Http\Kernel;
+
+$router = new \Nucleus\Routing\Router($kernel);
+$routes = require __DIR__ . '/../app/Http/Routes.php';

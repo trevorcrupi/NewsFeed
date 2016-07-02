@@ -2,9 +2,7 @@
 
 {% block content %}
 
-    <h1>Welcome to the blog!</h1>
-
-    <p>View your <a href="/inbox">Inbox</a></p>
+    <h1>Welcome to the blog, @{{ user.username }}!</h1>
 
     <p>Have a look at our articles:</p>
 
@@ -27,14 +25,5 @@
     </ul>
 
     <hr/>
-
-    <form action="/user" method="POST" style="width: 25%;">
-      <legend>Create a User</legend>
-      <input type="text" name="user_name" placeholder="Your User Name" />
-      <input type="text" name="user_email" placeholder="Your Email" />
-      <input type="password" name="user_password" placeholder="Your Password" />
-      <button type="submit" class="btn">Submit</button>
-    </form>
-
 
 {% endblock %}

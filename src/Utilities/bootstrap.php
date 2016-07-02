@@ -14,4 +14,6 @@ namespace Nucleus\Utilities;
 */
 
 require_once __DIR__ . "/Strings/Strings.php";
-require_once __DIR__ . "/Config/config.php";
+require_once __DIR__ . "/Config/Config.php";
+require_once __DIR__ . "/Session/Session.php";
+require_once __DIR__ . "/Redirect/Redirect.php";

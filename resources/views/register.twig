@@ -1,0 +1,16 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+  <form action="/user" method="POST" style="width: 25%; margin: 0 auto; margin-top: 25%;">
+    <legend>Create a User</legend>
+    <input type="text" name="user_name" placeholder="Your User Name" />
+    <input type="text" name="user_email" placeholder="Your Email" />
+    <input type="password" name="user_password" placeholder="Your Password" />
+    <button type="submit" class="btn">Submit</button>
+
+    <br /><br />
+    <a href="/login">Have an Account? Login Here.</a>
+  </form>
+
+{% endblock %}

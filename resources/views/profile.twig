@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<h2>{{ user.user_name }}</h2>
+<h2>{{ profile.user_name }}</h2>
 
 <ul>
-  <li>{{ user.user_email }}</li>
-  <li>{{ user.updated|date("m/d/Y") }}</li>
+  <li>{{ profile.user_email }}</li>
+  <li>{{ profile.updated|date("m/d/Y") }}</li>
 </ul>
 
 {% endblock %}

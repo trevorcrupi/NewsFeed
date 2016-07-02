@@ -2,6 +2,7 @@
 
 use function DI\object;
 use Doctrine\ORM\EntityManager;
+use Nucleus\Utilities;
 
 global $entityManager;
 

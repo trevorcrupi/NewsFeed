@@ -3,6 +3,8 @@
 namespace Http\Controller;
 
 use Persistence\Repositories\MessageRepository;
+use Persistence\Repositories\UserRepository;
+use Nucleus\Utilities;
 use Twig_Environment;
 
 class MessageController
@@ -17,25 +19,25 @@ class MessageController
     */
     private $twig;
 
-    public function __construct(MessageRepository $repository, Twig_Environment $twig)
+    /**
+     * @var UserRepository
+     */
+     private $repo;
+
+    public function __construct(MessageRepository $repository, UserRepository $repo, Twig_Environment $twig)
     {
-      $this->repository = $repository;
-      $this->twig = $twig;
+        $this->repository = $repository;
+        $this->repo = $repo;
+        $this->twig = $twig;
     }
+
 
     public function all()
     {
       $messages = $this->repository->getMessages();
       echo $this->twig->render('messages.twig', [
-        'messages' => $messages
-      ]);
-    }
-
-    public function read()
-    {
-      $messages = $this->repository->getMessages();
-      echo $this->twig->render('messages-api.twig', [
-        'messages' => $messages
+        'messages' => $messages,
+        'user'     => $this->repo->getUser( session('id') )
       ]);
     }
 
@@ -44,15 +46,15 @@ class MessageController
       $message = $this->repository->getMessage($id);
 
       echo $this->twig->render('message.twig', [
-        'message' => $message
+        'message' => $message,
+        'user'    => $this->repo->getUser( session('id') )
       ]);
     }
 
     public function add()
     {
       $text = $_POST['message_text'];
-      if($this->repository->save($text)) {
-        echo "Saved!!!";
-      }
+      $this->repository->save($text);
+      redirect("/inbox");
     }
 }

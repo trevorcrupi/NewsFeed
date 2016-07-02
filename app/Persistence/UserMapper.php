@@ -5,6 +5,7 @@ namespace Persistence;
 use Model\User;
 use Persistence\Repositories\UserRepository;
 use Doctrine\ORM\EntityManager;
+use Nucleus\Utilites;
 
 class UserMapper implements UserRepository
 {
@@ -24,6 +25,18 @@ class UserMapper implements UserRepository
   public function getUser( $id )
   {
     return $this->user->find($id);
+  }
+
+  public function login( $id )
+  {
+    set("id", $id);
+    set("user_logged_in", true);
+  }
+
+  public function logout()
+  {
+    set("user_logged_in", false);
+    destroy();
   }
 
   public function save($user_name, $user_email, $password)

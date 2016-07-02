@@ -8,6 +8,20 @@
 <body>
 
     <div class="container">
+          {% if user.id %}
+          <nav>
+            <div class="nav-wrapper">
+              <a href="/" class="brand-logo">Logo</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                  <li><a href="/inbox">Inbox</a></li>
+                  <li><a href="/{{user.username}}">Profile</a></li>
+                  <li><a href="/logout">Log Out</a></li>
+              </ul>
+            </div>
+          </nav>
+          {% endif %}
+
+
         {% block content %}
         {% endblock %}
     </div>

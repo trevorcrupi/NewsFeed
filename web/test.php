@@ -1,52 +1,21 @@
 <?php
 
-trait ProviderTrait
+class Http
 {
-  public $dependencies;
-  public $registered = [];
-
-  public function registerDependecies()
+  public function save($http, $callback)
   {
-    foreach($this->dependencies as $name => $depend)
-    {
-      $this->registered[$name] = $depend->register();
-    }
+    $this->methods[$http][$url] = $callback;
   }
 
-  public function getRegistered()
+  public function __call($name, $arguments)
   {
-    return $this->registered;
+    $this->save( $name, $arguments[0], $arguments[1] );
   }
 }
 
-class Middleman
-{
-  use ProviderTrait;
-}
+$http = new Http;
 
-class TestA extends Middleman
-{
-  public function register()
-  {
-    return [
-      "hello" => "Hey!"
-    ];
-  }
-}
-
-class TestB extends Middleman
-{
-  public function register()
-  {
-    return [
-      "hey" => "Hello!"
-    ];
-  }
-}
-
-$middleman = new Middleman;
-$middleman->dependencies = ["testa" => new TestA, "testb" => new TestB];
-$middleman->registerDependecies();
-echo "<pre>";
-var_dump($middleman->getRegistered());
-echo "</pre>";
+$http->post("/trevorcrupi", function() {
+  echo "Hello!";
+});
+// Hello, World!
