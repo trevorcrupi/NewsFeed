@@ -14,11 +14,11 @@ $router->get("/logout", "UserController@logout");
 // Register
 $router->get("/register", "UserController@register");
 
-// Get Article
-$router->get("/article/{id}", "ArticleController@show");
-
 // Inbox
 $router->get("/inbox", "MessageController@all");
+
+// Follow User
+$router->get("/follow/{id}", "UserController@follow");
 
 // Get specific Message
 $router->get("/messages/{id}", "MessageController@show");

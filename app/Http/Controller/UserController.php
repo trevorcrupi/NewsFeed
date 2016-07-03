@@ -46,8 +46,10 @@ class UserController
       );
 
       echo $this->twig->render('profile.twig', [
-        'profile' => $user,
-        'user'    => $this->repository->getUser( session('id') )
+        'profile'   => $user,
+        'url'       => $_SERVER['REQUEST_URI'],
+        'user'      => $this->repository->getUser( session('id') ),
+        'session'   => session()
       ]);
     }
 
@@ -78,8 +80,20 @@ class UserController
       if(!password_verify($request["user_password"], $user->getUserPasswordHash()))
         redirect("/login");
 
-      $this->repository->login($user->getId());
+      // Construct Social Graph - Save in session
+      $connection_edges_forward = $this->repository->getForwardEdges($user->getId());
+      $this->repository->login($user->getId(), $connection_edges_forward);
       redirect();
+    }
+
+    public function follow($id)
+    {
+      $this->repository->follow(session("id"), $id);
+
+      if(isset($_GET['to']))
+        redirect($_GET['to']);
+      else
+        redirect();
     }
 
     public function logout()

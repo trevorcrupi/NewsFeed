@@ -3,41 +3,41 @@
 namespace Model;
 
 /**
- * @Entity @Table(name="connection_edges_forward")
+ * @Entity @Table(name="follow")
  */
-class ConnectionEdgesForward
+class Follow
 {
   /** @Id @Column(type="integer") @GeneratedValue **/
-  private $id;
+  protected $id;
 
   /**
    * @Column(type="integer")
    */
-   private $from;
+   protected $follower;
 
    /**
     * @Column(type="integer")
   */
-  private $to;
+  protected $following;
 
   /**
    * @Column(type="decimal")
    */
-   private $affinity;
+   protected $affinity;
 
    public function getId()
    {
      return $this->id;
    }
 
-   public function getFrom()
+   public function getFollower()
    {
-     return $this->from;
+     return $this->follower;
    }
 
-   public function getTo()
+   public function getFollowing()
    {
-     return $this->to;
+     return $this->following;
    }
 
    public function getAffinity()
@@ -45,14 +45,14 @@ class ConnectionEdgesForward
      return $this->affinity;
    }
 
-   public function setFrom( $from )
+   public function setFollower( $follower )
    {
-     $this->from = $from;
+     $this->follower = $follower;
    }
 
-   public function setTo( $to )
+   public function setFollowing( $following )
    {
-     $this->to = $to;
+     $this->following = $following;
    }
 
    public function setAffinity( $affinity )

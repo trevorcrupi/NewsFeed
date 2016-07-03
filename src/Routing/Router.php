@@ -70,7 +70,8 @@ class Router
               $r->addRoute("POST", $pattern, $route);
     });
 
-    $route = $this->getDispatcher()->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+    $uri = rawurldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    $route = $this->getDispatcher()->dispatch($_SERVER['REQUEST_METHOD'], $uri);
 
     if(isset($this->middleware[$_SERVER['REQUEST_METHOD']][$route[1][0]]))
       if(is_array($route[1]))

@@ -24,9 +24,12 @@
   * @param string $key
   * @return Session variable
   */
-function session($key)
+function session($key = null)
 {
   init();
+  if($key == null)
+    return $_SESSION;
+
   if(isset($_SESSION[$key]))
     return $_SESSION[$key];
 

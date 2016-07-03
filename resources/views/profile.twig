@@ -9,4 +9,15 @@
   <li>{{ profile.updated|date("m/d/Y") }}</li>
 </ul>
 
+<h4>Following</h4>
+{% for follows in session.connection_edges_forward %}
+  <ul>
+    <li>{{ follows.following }}</li>
+  </ul>
+{% endfor %}
+
+{% if user.id != profile.id %}
+  <a href="/follow/{{ profile.id }}?to={{ url }}">Follow @{{ profile.user_name }}</a>
+{% endif %}
+
 {% endblock %}
