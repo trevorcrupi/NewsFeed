@@ -40,7 +40,7 @@ class HomeController
     {
         echo $this->twig->render('home.twig', [
             'articles' => $this->repository->getArticles(),
-            'user'     => $this->repo->getUser( session('id') )
+            'session'  => session()
         ]);
     }
 }

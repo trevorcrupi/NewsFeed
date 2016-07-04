@@ -30,10 +30,12 @@ function session($key = null)
   if($key == null)
     return $_SESSION;
 
-  if(isset($_SESSION[$key]))
-    return $_SESSION[$key];
+  if(contains($key, ".")) {
+    $key = splitString(".", $key);
+    return $_SESSION[$key[0]][$key[1]] ?? false;
+  }
 
-  return false;
+  return $_SESSION[$key] ?? false;
 }
 
 /**
@@ -44,7 +46,12 @@ function session($key = null)
 function set($key, $value)
 {
   init();
-  $_SESSION[$key] = $value;
+  if(!is_array($key)) {
+    $_SESSION[$key] = $value;
+    return;
+  }
+
+  $_SESSION[$key[0]][$key[1]] = $value;
 }
 
 /**

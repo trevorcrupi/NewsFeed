@@ -9,15 +9,63 @@
   <li>{{ profile.updated|date("m/d/Y") }}</li>
 </ul>
 
-<h4>Following</h4>
-{% for follows in session.connection_edges_forward %}
-  <ul>
-    <li>{{ follows.following }}</li>
-  </ul>
-{% endfor %}
+<!-- Modal Trigger -->
+<a data-target="followers" class="waves-effect waves-light btn modal-trigger" href="#followers">Followers ({{ followers|length }})</a>
+<a data-target="following" class="waves-effect waves-light btn modal-trigger" href="#following">Following ({{ following|length }})</a><br /><br />
 
-{% if user.id != profile.id %}
-  <a href="/follow/{{ profile.id }}?to={{ url }}">Follow @{{ profile.user_name }}</a>
+<!-- Modal Structure -->
+<div id="following" class="modal">
+  <div class="modal-content">
+      <h4>Following</h4>
+      <ul class="collection">
+        {% for follows in following %}
+          <li class="collection-item avatar">
+            <i class="material-icons circle green">assessment</i>
+            <span class="title"><a href="/{{follows.user_name}}">@{{ follows.user_name }}</a></span>
+            <p>{{ follows.user_email }} </p>
+            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+</div>
+
+<div id="followers" class="modal">
+  <div class="modal-content">
+      <h4>Followers</h4>
+      <ul class="collection">
+        {% for follows in followers %}
+          <li class="collection-item avatar">
+            <i class="material-icons circle green">assessment</i>
+            <span class="title"><a href="/{{follows.user_name}}">@{{ follows.user_name }}</a></span>
+            <p>{{ follows.user_email }} </p>
+            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+</div>
+
+{% if session.id != profile.id %}
+  {% if is_following %}
+    <a href="/unfollow/{{ profile.id }}?to={{ url }}">Unfollow @{{ profile.user_name }}</a>
+  {% else %}
+    <a href="/follow/{{ profile.id }}?to={{ url }}">Follow @{{ profile.user_name }}</a>
+  {% endif %}
 {% endif %}
+
+<script type="text/javascript">
+$(document).ready(function(){
+  // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+  $('.modal-trigger').leanModal();
+});
+
+</script>
 
 {% endblock %}

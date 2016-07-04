@@ -37,7 +37,7 @@ class MessageController
       $messages = $this->repository->getMessages();
       echo $this->twig->render('messages.twig', [
         'messages' => $messages,
-        'user'     => $this->repo->getUser( session('id') )
+        'session'  => session()
       ]);
     }
 
@@ -47,7 +47,7 @@ class MessageController
 
       echo $this->twig->render('message.twig', [
         'message' => $message,
-        'user'    => $this->repo->getUser( session('id') )
+        'session'  => session()
       ]);
     }
 

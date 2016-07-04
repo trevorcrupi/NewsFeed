@@ -19,6 +19,15 @@ class User
   /** @Column(type="string", length=255, nullable=false) **/
   public $user_password_hash;
 
+  /** @Column(type="string", length=255, nullable=true) **/
+  public $user_first_name;
+
+  /** @Column(type="string", length=255, nullable=true) **/
+  public $user_last_name;
+
+  /** @Column(type="string", length=400, nullable=true) **/
+  public $user_bio;
+
   /** @Column(type="datetime") **/
   public $updated;
 
@@ -40,6 +49,21 @@ class User
   public function getUserPasswordHash()
   {
     return $this->user_password_hash;
+  }
+
+  public function getUserFirstName()
+  {
+    return $this->user_first_name;
+  }
+
+  public function getUserLastName()
+  {
+    return $this->user_last_name;
+  }
+
+  public function getUserBio()
+  {
+    return $this->user_bio;
   }
 
   public function getUpdated()
@@ -64,6 +88,21 @@ class User
     ];
 
     $this->user_password_hash = password_hash($password, PASSWORD_DEFAULT, $options);
+  }
+
+  public function setUserFirstName( $user_first_name )
+  {
+    $this->user_first_name = $user_first_name;
+  }
+
+  public function setUserLastName( $user_last_name )
+  {
+    $this->user_last_name = $user_last_name;
+  }
+
+  public function setUserBio( $user_bio )
+  {
+    $this->user_bio = $user_bio;
   }
 
   public function setUpdated()

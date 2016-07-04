@@ -1,7 +1,5 @@
 <?php
 
-use Nucleus\Routing\Router;
-
 // Home Page
 $router->get("/", "HomeController@home");
 
@@ -20,6 +18,8 @@ $router->get("/inbox", "MessageController@all");
 // Follow User
 $router->get("/follow/{id}", "UserController@follow");
 
+// Unfollow User
+$router->get("/unfollow/{id}", "UserController@unfollow");
 // Get specific Message
 $router->get("/messages/{id}", "MessageController@show");
 
@@ -29,5 +29,3 @@ $router->post("/login/user", "UserController@loginUser");
 
 // Profile Page
 $router->get("/{user_name}", "UserController@profile");
-
-return $router->dispatch($container);

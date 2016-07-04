@@ -28,11 +28,15 @@ class UserMapper implements UserRepository
     return $this->user->find($id);
   }
 
-  public function login( $id, $connection_edges_forward )
+  public function login( $user, $edges = [] )
   {
-    set("id", $id);
+    set("id", $user->id);
+    set("user", $user);
     set("user_logged_in", true);
-    set("connection_edges_forward", $connection_edges_forward);
+    // session.edges.connection_edges_forward
+    // session.edges.connection_edges_reverse
+    set(["edges", "connection_edges_forward"], $edges["forward"]);
+    set(["edges", "connection_edges_reverse"], $edges["reverse"]);
   }
 
   public function logout()
@@ -63,7 +67,38 @@ class UserMapper implements UserRepository
     $this->getEntityManager()->persist($follow);
     $this->getEntityManager()->flush();
 
-    set("connection_edges_forward", $this->getForwardEdges($follow->getFollower()));
+    set(["edges", "connection_edges_forward"], $this->getForwardEdges($follow->getFollower()));
+    set(["edges", "connection_edges_reverse"], $this->getReverseEdges($follow->getFollower()));
+  }
+
+  public function unfollow($from, $to)
+  {
+    $qb = $this->getEntityManager()->createQueryBuilder()->select('f.id')
+                  ->from('Model\Follow', 'f')
+                  ->where('f.follower = :follower AND f.following = :following')
+                  ->setParameters(["follower" => $from, "following" => $to]);
+    $query = $qb->getQuery();
+    $result = $query->getSingleResult();
+
+    $follow = $this->getEntityManager()->getRepository(Follow::class);
+
+    $follow = $follow->find($result);
+    $this->getEntityManager()->remove($follow);
+    $this->getEntityManager()->flush();
+
+    set(["edges", "connection_edges_forward"], $this->getForwardEdges($follow->getFollower()));
+    set(["edges", "connection_edges_reverse"], $this->getReverseEdges($follow->getFollower()));
+  }
+
+  public function isFollowing($following, $id)
+  {
+    foreach($following as $user)
+    {
+      if($user->id == $id)
+        return true;
+    }
+
+    return false;
   }
 
   public function getForwardEdges( $id )
@@ -73,9 +108,23 @@ class UserMapper implements UserRepository
                   ->where('f.follower = :follower')
                   ->setParameter("follower", $id);
     $query = $qb->getQuery();
-    $connection_edges_forward = $query->getResult();
+    $result = $query->getScalarResult();
+    $connection_edges_forward = array_map([$this, "getUser"], array_map('current', $result));
 
     return $connection_edges_forward;
+  }
+
+  public function getReverseEdges($id)
+  {
+    $qb = $this->getEntityManager()->createQueryBuilder()->select('f.follower')
+                  ->from('Model\Follow', 'f')
+                  ->where('f.following = :following')
+                  ->setParameter("following", $id);
+    $query = $qb->getQuery();
+    $result = $query->getScalarResult();
+    $connection_edges_reverse = array_map([$this, "getUser"], array_map('current', $result));
+
+    return $connection_edges_reverse;
   }
 
   public function getUserIdByUsername($user_name)

@@ -36,7 +36,7 @@ class UserController
       $this->repository->login(
         $this->repository->getUserIdByUsername($request['user_name'])
       );
-      header('Location: http://localhost:8080/'.$request['user_name']);
+      redirect("/".$request['user_name']);
     }
 
     public function profile( $user_name )
@@ -45,11 +45,21 @@ class UserController
         $this->repository->getUserIdByUsername($user_name)
       );
 
+      $following = $this->repository->getForwardEdges($user->id);
+
+
+      if($user->id !== session('id'))
+        $isFollowing = $this->repository->isFollowing(session('edges.connection_edges_forward'), $user->id);
+      else
+        $isFollowing = false;
+
       echo $this->twig->render('profile.twig', [
-        'profile'   => $user,
-        'url'       => $_SERVER['REQUEST_URI'],
-        'user'      => $this->repository->getUser( session('id') ),
-        'session'   => session()
+        'profile'      => $user,
+        'url'          => $_SERVER['REQUEST_URI'],
+        'session'      => session(),
+        'following'    => $following,
+        'followers'    => $this->repository->getReverseEdges($user->id),
+        'is_following' => $isFollowing
       ]);
     }
 
@@ -67,22 +77,32 @@ class UserController
     {
       $request = [
         "user_name"      => $_POST['user_name'],
-        "user_password" => $_POST['user_password']
+        "user_password"  => $_POST['user_password']
       ];
 
       $user = $this->repository->getUser(
         $this->repository->getUserIdByUsername($request["user_name"])
       );
 
-      if(!$user)
+      if(!$user) {
         redirect("/login");
+        return;
+      }
 
-      if(!password_verify($request["user_password"], $user->getUserPasswordHash()))
+      if(!password_verify($request["user_password"], $user->getUserPasswordHash())) {
         redirect("/login");
+        return;
+      }
 
       // Construct Social Graph - Save in session
       $connection_edges_forward = $this->repository->getForwardEdges($user->getId());
-      $this->repository->login($user->getId(), $connection_edges_forward);
+      $connection_edges_reverse = $this->repository->getReverseEdges($user->getId());
+
+
+      $this->repository->login($user, [
+        "forward" => $connection_edges_forward,
+        "reverse" => $connection_edges_reverse
+      ]);
       redirect();
     }
 
@@ -96,9 +116,19 @@ class UserController
         redirect();
     }
 
+    public function unfollow($id)
+    {
+      $this->repository->unfollow(session("id"), $id);
+
+      if(isset($_GET['to']))
+        redirect($_GET['to']);
+      else
+        redirect();
+    }
+
     public function logout()
     {
       $this->repository->logout();
-      header("Location: /login");
+      redirect("/login");
     }
 }

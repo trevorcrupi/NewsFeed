@@ -1,21 +1,8 @@
 <?php
 
-class Http
+function contains($needle, $haystack)
 {
-  public function save($http, $callback)
-  {
-    $this->methods[$http][$url] = $callback;
-  }
-
-  public function __call($name, $arguments)
-  {
-    $this->save( $name, $arguments[0], $arguments[1] );
-  }
+    return (strpos($haystack, $needle) !== false);
 }
 
-$http = new Http;
-
-$http->post("/trevorcrupi", function() {
-  echo "Hello!";
-});
-// Hello, World!
+var_dump(contains(".", "hi.hey"));
