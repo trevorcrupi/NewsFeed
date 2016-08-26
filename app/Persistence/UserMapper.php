@@ -92,6 +92,9 @@ class UserMapper implements UserRepository
 
   public function isFollowing($following, $id)
   {
+    if(!$following)
+      return false; 
+    
     foreach($following as $user)
     {
       if($user->id == $id)

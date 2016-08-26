@@ -17,7 +17,7 @@ class Router
 
   protected $kernel;
 
-  public function __construct(\Http\Kernel $kernel)
+  public function __construct(\Http\Kernel $kernel = null)
   {
     $this->kernel = $kernel;
   }
@@ -99,10 +99,11 @@ class Router
             break;
     }
   }
-
+/*
   public function doMiddleware( $middleware )
   {
     $handler = new $this->kernel->middleware[array_keys($middleware)[0]]();
     call_user_func_array([$handler, "handle"], [$middleware[array_keys($middleware)[0]]]);
   }
+*/
 }

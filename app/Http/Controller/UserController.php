@@ -3,6 +3,7 @@
 namespace Http\Controller;
 
 use Persistence\Repositories\UserRepository;
+use Nucleus\Http\Controller; 
 use Nucleus\Utilities;
 use Twig_Environment;
 

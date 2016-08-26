@@ -29,3 +29,11 @@ $router->post("/login/user", "UserController@loginUser");
 
 // Profile Page
 $router->get("/{user_name}", "UserController@profile");
+
+/*
+ #goals 
+	
+	$app->get('/', function(App $app) {
+		return $app['home']->render('/user/:id');
+	});
+*/

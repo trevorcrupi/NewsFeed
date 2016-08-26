@@ -14,7 +14,7 @@ $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../app/Mo
 $conn = array(
     'driver'   => 'pdo_mysql',
     'host'     => '127.0.0.1',
-    'dbname'   => 'communicode',
+    'dbname'   => 'newsfeed',
     'user'     => 'root',
     'password' => ''
 );

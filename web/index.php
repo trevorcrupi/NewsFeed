@@ -8,4 +8,6 @@ $router = new \Nucleus\Routing\Router($kernel);
 
 $routes = require __DIR__ . '/../app/Http/Routes.php';
 
+$router->get("/", "HomeController@home");
+
 $router->dispatch($container);
